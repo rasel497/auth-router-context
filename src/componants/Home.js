@@ -7,7 +7,7 @@ const Home = () => {
 
     return (
         <div>
-            <h2>This is Home for {user?.displayName}</h2>
+            <h2>This is Home for {user?.email}</h2>
         </div>
     );
 };
