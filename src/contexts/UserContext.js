@@ -9,7 +9,8 @@ const auth = getAuth(app)
 
 const UserContext = ({ children }) => {
     //create for home page test. const user = { displayName: 'Akash' }
-    const [user, setUser] = useState({ displayName: 'AAAKashhh' })
+    const [user, setUser] = useState({});
+    const [loading, setLoading] = useState(true);
 
     //G-2 google provider
     const googleProvider = new GoogleAuthProvider();
@@ -40,6 +41,7 @@ const UserContext = ({ children }) => {
     useEffect(() => {
         const unsubcribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser);
+            setLoading(false);
             console.log('auth state changed', currentUser);
         })
 
@@ -48,7 +50,7 @@ const UserContext = ({ children }) => {
         }
     }, [])
 
-    const authInfo = { user: user, createUser, signIn, logOut, signInWithGoogle };
+    const authInfo = { user: user, createUser, signIn, logOut, signInWithGoogle, loading };
 
     return (
         <AuthContext.Provider value={authInfo}>

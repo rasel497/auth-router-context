@@ -1,9 +1,11 @@
 import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/UserContext';
 
 const Login = () => {
     const { signIn } = useContext(AuthContext);
-    console.log('signIn', signIn);
+    // console.log('signIn', signIn);
+    const navigate = useNavigate();
 
     const handleOnSubmitForm = event => {
         event.preventDefault(); //1st use for nor reload
@@ -17,6 +19,8 @@ const Login = () => {
             .then(reuslt => {
                 const user = reuslt.user;
                 console.log(user);
+                // form.reset();
+                navigate('/')
             })
             .catch(error => {
                 console.error(error);
