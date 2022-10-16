@@ -17,7 +17,8 @@ ContextProvider (with passed the children) use korsi.
 Now, Auth Integration Go  to Firebase
 -----------------------------------------
 1.  use getAuth by passing the app from firebase config
-2.
+2. create a function named createUser to return createUserWithEmailAndPassword()
+
 3.
 
 */
