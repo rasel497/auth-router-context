@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
 import app from '../firebase/firebase.config';
 
 
@@ -11,22 +11,32 @@ const UserContext = ({ children }) => {
     //create for home page test. const user = { displayName: 'Akash' }
     const [user, setUser] = useState({ displayName: 'AAAKashhh' })
 
+    //G-2 google provider
+    const googleProvider = new GoogleAuthProvider();
+
+
     // create for register page
     const createUser = (email, password) => {
         return createUserWithEmailAndPassword(auth, email, password);
     }
-    //R3 It's event trigger API call systm
-    //R3 create for login page
+    //EP2.1 It's event trigger API call systm
+    //EP2.1 create for login page
     const signIn = (email, password) => {
         return signInWithEmailAndPassword(auth, email, password);
     }
+
+    //G1.1 google templ setup
+    const signInWithGoogle = () => {
+        return signInWithPopup(auth, googleProvider)
+    }
+
     // create for header Sign out handle
     const logOut = () => {
         return signOut(auth);
     }
 
-    //R3 side effect API call
-    //R3 why are we doing this??
+    //EP2.1 side effect API call
+    //EP2.1 why are we doing this??
     useEffect(() => {
         const unsubcribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser);
@@ -38,7 +48,7 @@ const UserContext = ({ children }) => {
         }
     }, [])
 
-    const authInfo = { user: user, createUser, signIn, logOut };
+    const authInfo = { user: user, createUser, signIn, logOut, signInWithGoogle };
 
     return (
         <AuthContext.Provider value={authInfo}>
