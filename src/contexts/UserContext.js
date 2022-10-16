@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import app from '../firebase/firebase.config';
 
 
@@ -15,14 +15,18 @@ const UserContext = ({ children }) => {
     const createUser = (email, password) => {
         return createUserWithEmailAndPassword(auth, email, password);
     }
-    // It's event trigger API call systm
-    // create for login page
+    //R3 It's event trigger API call systm
+    //R3 create for login page
     const signIn = (email, password) => {
         return signInWithEmailAndPassword(auth, email, password);
     }
+    // create for header Sign out handle
+    const logOut = () => {
+        return signOut(auth);
+    }
 
-    // side effect API call
-    // why are we doing this??
+    //R3 side effect API call
+    //R3 why are we doing this??
     useEffect(() => {
         const unsubcribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser);
@@ -34,7 +38,7 @@ const UserContext = ({ children }) => {
         }
     }, [])
 
-    const authInfo = { user: user, createUser, signIn };
+    const authInfo = { user: user, createUser, signIn, logOut };
 
     return (
         <AuthContext.Provider value={authInfo}>
